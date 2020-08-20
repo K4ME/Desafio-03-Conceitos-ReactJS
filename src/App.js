@@ -6,8 +6,6 @@ import "./styles.css";
 
 function App() {
   const [repository, setRepository] = useState([]);
-  const [title, setTitle] = useState([]);
-  const [owner, setOwner] = useState([]);
 
   useEffect(() => {
     api.get("/projects").then((response) => {
@@ -17,8 +15,8 @@ function App() {
 
   async function handleAddRepository() {
     const response = await api.post("projects", {
-      title: title,
-      owner: owner,
+      title: `Novo projeto ${Date.now()}`,
+      owner: "Guilherme Macrini",
     });
 
     setRepository([...repository, response.data]);
@@ -46,18 +44,6 @@ function App() {
           </li>
         ))}
       </ul>
-      <input
-        required
-        placeholder="Digite o título do projeto"
-        value={title}
-        onChange={(event) => setTitle(event.target.value)}
-      />
-      <input
-        required
-        placeholder="Digite o dono do projeto"
-        value={owner}
-        onChange={(event) => setOwner(event.target.value)}
-      />
       <button onClick={handleAddRepository}>Adicionar</button>
     </div>
   );
